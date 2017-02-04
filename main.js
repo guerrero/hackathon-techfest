@@ -33,6 +33,18 @@ function setBulbColor() {
   oReq.send(JSON.stringify(body));
 }
 
+function setOfBulbColor() {
+  var body = {
+    "on":false
+  };
+
+  var oReq = new XMLHttpRequest();
+  oReq.addEventListener("load", dummy);
+  oReq.open('PUT', "http://10.0.1.23/api/" + token + "/lights/1/state");
+  oReq.send(JSON.stringify(body));
+}
+
+
 function getCredentials() {
   var body = {
     devicetype: "my_hue_app#iphone"
@@ -45,5 +57,5 @@ function getCredentials() {
 }
 
 getCredentials()
-
+setTimeout(setOfBulbColor,500)
 requestButton.addEventListener("click", setBulbColor)
