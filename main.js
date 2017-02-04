@@ -15,7 +15,23 @@ function manageLogin() {
   }
 }
 
+function dummy() {
+  console.log(this.responseText);
+}
 
+function setBulbColor() {
+  var body = {
+    "on":true,
+    "sat":254,
+    "bri":100,
+    "hue":0
+  };
+
+  var oReq = new XMLHttpRequest();
+  oReq.addEventListener("load", dummy);
+  oReq.open('PUT', "http://10.0.1.23/api/" + token + "/lights/1/state");
+  oReq.send(JSON.stringify(body));
+}
 
 function getCredentials() {
   var body = {
@@ -29,3 +45,5 @@ function getCredentials() {
 }
 
 getCredentials()
+
+requestButton.addEventListener("click", setBulbColor)
