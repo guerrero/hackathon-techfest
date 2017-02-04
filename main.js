@@ -19,6 +19,30 @@ function dummy() {
   console.log(this.responseText);
 }
 
+function comprobarStatus() {
+  var status = this.status
+  if(status!=502){
+    statusOK()
+  }
+  else{
+    setBulbColor()
+  }
+}
+
+function statusOk(){
+  var body = {
+    "on":true,
+    "sat":254,
+    "bri":100,
+    "hue":25500
+  };
+
+  var oReq = new XMLHttpRequest();
+  oReq.addEventListener("load", dummy);
+  oReq.open('PUT', "http://10.0.1.23/api/" + token + "/lights/1/state");
+  oReq.send(JSON.stringify(body));
+}
+
 function setBulbColor() {
   var body = {
     "on":true,
@@ -44,6 +68,12 @@ function setOfBulbColor() {
   oReq.send(JSON.stringify(body));
 }
 
+function getServerStatus(){
+  var oReq = new XMLHttpRequest();
+  oReq.addEventListener("load", comprobarStatus);
+  oReq.open('PUT', "http://10.0.1.23");
+  oReq.send();
+}
 
 function getCredentials() {
   var body = {
@@ -58,4 +88,5 @@ function getCredentials() {
 
 getCredentials()
 setTimeout(setOfBulbColor,500)
+setTimeout(getServerStatus,800)
 requestButton.addEventListener("click", setBulbColor)
